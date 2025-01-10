@@ -9,7 +9,7 @@ export class Game {
     this.canvas = document.getElementById(canvasId);
     this.gameOverModal = document.getElementById("gameOverModal");
     this.ctx = this.canvas.getContext("2d");
-
+    this.score = 0;
     this.canvas.width = 800;
     this.canvas.height = 600;
     this.gameOver = false;
@@ -79,7 +79,7 @@ export class Game {
   updateCanvas() {
     if (this.gameOver) {
       this.ShowgameOver();
-      playSound("./asset/sound/gameOver.wav")
+      playSound("./asset/sound/gameOver.wav");
       return;
     }
 
@@ -121,7 +121,7 @@ export class Game {
 
   generateBullet() {
     const bullet = new Bullet(this.ship.x + 23, this.ship.y - 10);
-    playSound("./asset/sound/laser-shot.mp3")
+    playSound("./asset/sound/laser-shot.mp3");
     this.bullets.push(bullet);
   }
 
@@ -132,11 +132,16 @@ export class Game {
           this.bullets.splice(bulletIndex, 1);
           this.aliens.splice(alienIndex, 1);
           this.playRandomEnemySound();
+          this.score += 1;
+          this.updateScore();
         }
       });
     });
   }
-
+  updateScore() {
+    const scoreElement = document.getElementById("score");
+    scoreElement.textContent = `Score: ${this.score}`;
+  }
   generateAlien() {
     const alien = new Alien(
       Math.random() * (this.canvas.width - 50),
@@ -155,6 +160,8 @@ export class Game {
     this.ship = new Ship(this.canvas.width / 2 - 25, this.canvas.height - 80);
     this.ship.load(() => {
       this.updateCanvas();
+      this.score = 0;
+      this.updateScore();
     });
   }
 }

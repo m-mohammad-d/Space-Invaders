@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders - Settings</title>
+    <link rel="stylesheet" href="/style/style.css" />
+  </head>
+  <body>
+    <div id="settings-menu">
+      <h1>Settings</h1>
+
+      <div class="setting-item">
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" min="0" max="100" value="50" />
+      </div>
+
+      <div class="setting-item">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label for="controls">Controls:</label>
+        <select id="controls">
+          <option value="keyboard">Keyboard</option>
+          <option value="touch">Touch</option>
+        </select>
+      </div>
+
+      <button onclick="location.href='index.html'" id="back-button">
+        Back to Menu
+      </button>
+    </div>
+  </body>
+</html>

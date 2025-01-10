@@ -16,7 +16,11 @@ body {
   height: 100vh;
   overflow: hidden;
   text-align: center;
-  background: linear-gradient(135deg, #0a0a0a, #1c1c1c);
+  background-image: url("/asset//image/background.jpg");
+  backdrop-filter: blur(10px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   animation: fadeIn 1s ease-out;
 }
 

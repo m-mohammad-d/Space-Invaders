@@ -1,12 +1,12 @@
 import { Align } from "./Align.js";
 
 export class Alien extends Align {
-  constructor(x, y, width = 50, height = 50) {
+  constructor(x, y, width = 50, height = 50, speed = 4) {
     super(x, y);
     this.width = width;
     this.height = height;
     this.color = "#0f0";
-    this.speed = 2;
+    this.speed = speed;
     this.img = new Image();
     this.img.src = "./asset/image/alien.png";
   }

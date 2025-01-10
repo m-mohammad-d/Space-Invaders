@@ -2,7 +2,7 @@ import { Ship } from "./Ship.js";
 import { Bullet } from "./Bullet.js";
 import { Alien } from "./Alien.js";
 import { Background } from "./Background.js";
-import { playSound } from "./utils.js";
+import { loadSettings, playSound } from "./utils.js";
 const enemySounds = ["./asset/sound/blip.mp3", "./asset/sound/e-oh.mp3"];
 export class Game {
   constructor(canvasId) {
@@ -13,14 +13,17 @@ export class Game {
     this.canvas.width = 800;
     this.canvas.height = 600;
     this.gameOver = false;
+    this.setting = loadSettings();
 
     this.ship = new Ship(this.canvas.width / 2 - 25, this.canvas.height - 80);
     this.background = new Background("./asset/image/background.jpg");
     this.bullets = [];
     this.aliens = [];
+    this.intervalId = null;
 
     this.initGame();
     this.bindEvents();
+    this.startAlienGeneration();
   }
 
   initGame() {
@@ -70,16 +73,30 @@ export class Game {
     }
   }
 
-  ShowgameOver() {
+  showGameOver() {
     this.gameOverModal.classList.add("show");
     this.gameOverModal.addEventListener("click", () => {
       this.restartGame();
     });
   }
+
+  startAlienGeneration() {
+    this.intervalId = setInterval(() => {
+      this.generateAlien();
+    }, this.setting.enemyGenerateSpeed);
+  }
+
+  stopAlienGeneration() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   updateCanvas() {
     if (this.gameOver) {
-      this.ShowgameOver();
+      this.showGameOver();
       playSound("./asset/sound/gameOver.wav");
+      this.stopAlienGeneration();
       return;
     }
 
@@ -93,11 +110,13 @@ export class Game {
 
     requestAnimationFrame(() => this.updateCanvas());
   }
+
   playRandomEnemySound() {
     const randomSound =
       enemySounds[Math.floor(Math.random() * enemySounds.length)];
     playSound(randomSound);
   }
+
   updateBullets() {
     this.bullets.forEach((bullet, index) => {
       if (bullet.y > 0) {
@@ -132,16 +151,19 @@ export class Game {
           this.bullets.splice(bulletIndex, 1);
           this.aliens.splice(alienIndex, 1);
           this.playRandomEnemySound();
-          this.score += 1;
+          this.score += this.setting.scorePerEnemy;
+
           this.updateScore();
         }
       });
     });
   }
+
   updateScore() {
     const scoreElement = document.getElementById("score");
     scoreElement.textContent = `Score: ${this.score}`;
   }
+
   generateAlien() {
     const alien = new Alien(
       Math.random() * (this.canvas.width - 50),
@@ -153,15 +175,6 @@ export class Game {
   }
 
   restartGame() {
-    this.gameOver = false;
-    this.bullets = [];
-    this.gameOverModal.classList.remove("show");
-    this.aliens = [];
-    this.ship = new Ship(this.canvas.width / 2 - 25, this.canvas.height - 80);
-    this.ship.load(() => {
-      this.updateCanvas();
-      this.score = 0;
-      this.updateScore();
-    });
+    location.reload();
   }
 }

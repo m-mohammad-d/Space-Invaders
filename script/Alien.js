@@ -8,7 +8,7 @@ export class Alien extends Align {
     this.color = "#0f0";
     this.speed = speed;
     this.img = new Image();
-    this.img.src = "./asset/image/alien.png";
+    this.img.src = "../asset/image/alien.png";
   }
 
   move() {

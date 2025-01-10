@@ -15,7 +15,7 @@ body {
   height: 100vh;
   overflow: hidden;
   text-align: center;
-  background-image: url("/asset//image/background.jpg");
+  background-image: url("../asset//image/background.jpg");
   backdrop-filter: blur(10px);
   background-position: center;
   background-repeat: no-repeat;

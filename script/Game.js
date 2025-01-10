@@ -3,7 +3,7 @@ import { Bullet } from "./Bullet.js";
 import { Alien } from "./Alien.js";
 import { Background } from "./Background.js";
 import { loadSettings, playSound } from "./utils.js";
-const enemySounds = ["./asset/sound/blip.mp3", "./asset/sound/e-oh.mp3"];
+const enemySounds = ["../asset/sound/blip.mp3", "../asset/sound/e-oh.mp3"];
 export class Game {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -16,7 +16,7 @@ export class Game {
     this.setting = loadSettings();
 
     this.ship = new Ship(this.canvas.width / 2 - 25, this.canvas.height - 80);
-    this.background = new Background("./asset/image/background.jpg");
+    this.background = new Background("../asset/image/background.jpg");
     this.bullets = [];
     this.aliens = [];
     this.intervalId = null;
@@ -95,7 +95,7 @@ export class Game {
   updateCanvas() {
     if (this.gameOver) {
       this.showGameOver();
-      playSound("./asset/sound/gameOver.wav");
+      playSound("../asset/sound/gameOver.wav");
       this.stopAlienGeneration();
       return;
     }
@@ -140,7 +140,7 @@ export class Game {
 
   generateBullet() {
     const bullet = new Bullet(this.ship.x + 23, this.ship.y - 10);
-    playSound("./asset/sound/laser-shot.mp3");
+    playSound("../asset/sound/laser-shot.mp3");
     this.bullets.push(bullet);
   }
 

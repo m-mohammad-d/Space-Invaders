@@ -5,7 +5,7 @@ export class Ship extends Align {
   constructor(x, y) {
     super(x, y); 
     this.img = new Image();
-    this.img.src = "./asset/image/ship.png";
+    this.img.src = "../asset/image/ship.png";
   }
 
   load(callback) {

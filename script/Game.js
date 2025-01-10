@@ -2,7 +2,8 @@ import { Ship } from "./Ship.js";
 import { Bullet } from "./Bullet.js";
 import { Alien } from "./Alien.js";
 import { Background } from "./Background.js";
-
+import { playSound } from "./utils.js";
+const enemySounds = ["./asset/sound/blip.mp3", "./asset/sound/e-oh.mp3"];
 export class Game {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -70,14 +71,15 @@ export class Game {
   }
 
   ShowgameOver() {
-    this.gameOverModal.classList.add("show")
-    this.gameOverModal.addEventListener("click" , () => {
-      this.restartGame()
-    })
+    this.gameOverModal.classList.add("show");
+    this.gameOverModal.addEventListener("click", () => {
+      this.restartGame();
+    });
   }
   updateCanvas() {
     if (this.gameOver) {
       this.ShowgameOver();
+      playSound("./asset/sound/gameOver.wav")
       return;
     }
 
@@ -91,7 +93,11 @@ export class Game {
 
     requestAnimationFrame(() => this.updateCanvas());
   }
-
+  playRandomEnemySound() {
+    const randomSound =
+      enemySounds[Math.floor(Math.random() * enemySounds.length)];
+    playSound(randomSound);
+  }
   updateBullets() {
     this.bullets.forEach((bullet, index) => {
       if (bullet.y > 0) {
@@ -115,6 +121,7 @@ export class Game {
 
   generateBullet() {
     const bullet = new Bullet(this.ship.x + 23, this.ship.y - 10);
+    playSound("./asset/sound/laser-shot.mp3")
     this.bullets.push(bullet);
   }
 
@@ -124,6 +131,7 @@ export class Game {
         if (bullet.collidesWith(alien)) {
           this.bullets.splice(bulletIndex, 1);
           this.aliens.splice(alienIndex, 1);
+          this.playRandomEnemySound();
         }
       });
     });
@@ -142,7 +150,7 @@ export class Game {
   restartGame() {
     this.gameOver = false;
     this.bullets = [];
-    this.gameOverModal.classList.remove("show")
+    this.gameOverModal.classList.remove("show");
     this.aliens = [];
     this.ship = new Ship(this.canvas.width / 2 - 25, this.canvas.height - 80);
     this.ship.load(() => {

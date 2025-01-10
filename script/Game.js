@@ -40,16 +40,16 @@ export class Game {
   handleKeyPress(e) {
     switch (e.key) {
       case "d":
-        this.ship.move(this.ship.x + 10, this.ship.y);
+        this.ship.move(this.ship.x + 20, this.ship.y);
         break;
       case "a":
-        this.ship.move(this.ship.x - 10, this.ship.y);
+        this.ship.move(this.ship.x - 20, this.ship.y);
         break;
       case "s":
-        this.ship.move(this.ship.x, this.ship.y + 10);
+        this.ship.move(this.ship.x, this.ship.y + 20);
         break;
       case "w":
-        this.ship.move(this.ship.x, this.ship.y - 10);
+        this.ship.move(this.ship.x, this.ship.y - 20);
         break;
       case " ":
         this.generateBullet();
